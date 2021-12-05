@@ -17,7 +17,7 @@ div = 5 # divisor del samplerate
 
 # se puede aprovechar el downsampling
 # no he comprobado resultados cuantitativamente
-samplerate = 8820
+samplerate = (44100 / 2)
 
 
 # lectura de todos los song names
