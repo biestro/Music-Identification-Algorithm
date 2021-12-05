@@ -15,7 +15,7 @@ from numpy import load
 while True:
 
     div = load('./database_peaks/div.npy')
-
+    sr = load('./database_peaks/samplerate.npy')
     print('============================================')
     print('=== A01707550 --  SP -- Alberto Ruiz B. ===')
     
@@ -28,7 +28,7 @@ while True:
     print('============================================')
     subprocess.run(["mpv", "./recordings_audio/" + recording])
     
-    win, myscores, myid = findmatch(recording, div) 
+    win, myscores, myid = findmatch(recording, div, srate=sr) 
 
     # plot
     plt.bar(myid, myscores)

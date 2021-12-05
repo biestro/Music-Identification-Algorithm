@@ -31,10 +31,10 @@ def fourier(signal, samplerate, divisor):
 def mypeaks(matrix, div):
 
     m = matrix# np.array([mag_MAIN[90], mag_MAIN[91], mag_MAIN[92], mag_MAIN[93]])
-    x = m[:,:int(2000 / div)] # hasta 2000 Hz
+    x = m[:,:int(1000 / div)] # hasta 2000 Hz
     fvec = np.arange(0, len(x[0]) * div, div)
     a_n = 4 # número de pedazos
-    b_n = int(2000 / a_n / div) # 
+    b_n = int(1000 / a_n / div) # 
     num = len(matrix)
     # 4 rangos de frecuencias
     peak_freq = np.zeros((num,4))
@@ -62,8 +62,8 @@ def getscore(song_magnitude, sample_magnitude, divisor):
     score_max = max(score)
     return(score_max)
 
-def findmatch(goal, div):
-    samplerate = 44100
+def findmatch(goal, div, srate):
+    samplerate = srate
     div = np.load('./database_peaks/div.npy')
     mag = np.load('./database_peaks/mag.npy', allow_pickle=True)
     pairs = np.load('./database_peaks/pairs.npy')
@@ -88,7 +88,7 @@ def findmatch(goal, div):
 
     print('============================================')
     print('\n    I have a match! \ (•◡•) /             ')
-    print(f'\n\nSong is: {winner} \nwith a {winnerpoints - runnerup} point margin over the runner up\n\n')
+    print(f'\n\nSong is: {winner} \nwith a {samplescores[sampleid] - runnerup} point margin over the runner up\n\n')
     print('============================================')
     
     return(winner, samplescores, songid)

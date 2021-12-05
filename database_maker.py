@@ -14,7 +14,10 @@ from os.path import isfile, join
 | variables
 '''
 div = 5 # divisor del samplerate
-samplerate = 44100
+
+# se puede aprovechar el downsampling
+# no he comprobado resultados cuantitativamente
+samplerate = 8820
 
 
 # lectura de todos los song names
@@ -44,3 +47,4 @@ for ii in range(len(songid)):
 np.save('./database_peaks/mag.npy', mag)
 np.save('./database_peaks/pairs.npy', pairs)
 np.save('./database_peaks/div.npy', div)
+np.save('./database_peaks/samplerate.npy', samplerate)
