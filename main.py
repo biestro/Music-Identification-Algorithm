@@ -44,4 +44,3 @@ while True:
     time.sleep(1)
     os.system('cls||clear')
     
-
