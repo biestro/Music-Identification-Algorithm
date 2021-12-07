@@ -40,9 +40,9 @@ jgs____ /(O)\  _________________/____)_`-._\|
     subprocess.run(["mpv", "./music_data/recordings_audio/" + recording])
     win, myscores, myid = findmatch(recording, srate=sr) 
 
-    if myid == -2:
+    if myid == False:
         print('\nReturning to main')
-        time.sleep(4)
+        time.sleep(2)
         os.system('cls||clear')
     else:
 

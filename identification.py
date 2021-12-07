@@ -133,7 +133,7 @@ def findmatch(goal, srate):
         print('         (╯°□°）╯︵ ┻━┻    ')
         print(f'\nCouldn\'t find a consistent match\n\n (score difference = {difference}) < 10')
         print('\n==============================================\n')
-        return(None, None, -2)
+        return(None, None, False)
     
     print('\n==============================================\n')
     print('        I found a match!!  \ (•◡•) /  ')
