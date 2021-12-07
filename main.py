@@ -3,8 +3,8 @@
 | Alberto Ruiz Biestro - A017075504 - Dec 2021
 | archivo principal que reconoce las canciones
 | no copiar eh ಠ_ಠ
-
 '''
+
 import subprocess
 import time
 import matplotlib.pyplot as plt
@@ -14,33 +14,44 @@ from numpy import load
 
 while True:
 
-    div = load('./database_peaks/div.npy')
-    sr = load('./database_peaks/samplerate.npy')
-    print('============================================')
-    print('=== A01707550 --  SP -- Alberto Ruiz B. ===')
+    div = load('./music_data/database_peaks/div.npy')
+    sr = load('./music_data/database_peaks/samplerate.npy')
     
-       
+    print(
+"""
+,___________________________________________
+|\`-._(   /                                 |
+| \  .'-._\      Alberto R B           ,   ,|
+|-.\`    .-;                         .'\`-' |
+|   \  .' (       F1009 SP        _.`   \   |
+|.--.\`   _)                    ;-;      \._|
+|    ` _\(_)/_                  \ `'-,_,-'\ |
+jgs____ /(O)\  _________________/____)_`-._\|
+"""
+        )
+
+    print('\nEnter recording number:\n') 
     recording = 'recording_' + input('In[]: ') + '.wav'
-    print('============================================')
     
-    print('============================================')
+    print('==============================================')
     print('\nPlaying Recording (Press "q" to quit)\n')
-    print('============================================')
-    subprocess.run(["mpv", "./recordings_audio/" + recording])
-    
-    win, myscores, myid = findmatch(recording, div, srate=sr) 
+    print('==============================================')
 
-    # plot
-    plt.bar(myid, myscores)
-    plt.xlabel('Song ID')
-    plt.title('Puntajes para "' + recording + '"')
-    plt.ylabel('Score')
-    plt.show()
+    subprocess.run(["mpv", "./music_data/recordings_audio/" + recording])
+    win, myscores, myid = findmatch(recording, srate=sr) 
 
-    print('============================================')
-    print('\nPlaying Matched Song (Press "q" to quit)\n')
-    print('============================================')
-    subprocess.run(["mpv", "./database_audio/" + win, '--start=30%'])
-    time.sleep(1)
-    os.system('cls||clear')
+    if myid == -2:
+        print('\nReturning to main')
+        time.sleep(4)
+        os.system('cls||clear')
+    else:
+
+        print('==============================================')
+        print('\nPlaying Matched Song (Press "q" to quit)\n')
+        print('==============================================')
+
+        subprocess.run(["mpv", "./music_data/database_audio/" + win, '--start=30%'])
+        time.sleep(1)
+        os.system('cls||clear')
+
     
