@@ -13,7 +13,9 @@ Está escrito en Python, así que no sugeriría analizar más de 20 canciones de
 
 Es necesario los archivos de audio (en `.mp3` o `.wav`) a la carpeta `./music_data/database_audio/`
 
-```python main.py```
+```
+python main.py
+```
 
 Seguir instrucciones dentro del archivo
 
