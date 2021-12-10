@@ -2,23 +2,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.fft import fft
 import librosa
-
+import pyaudio
+import wave
 
 # función para leer cosas
 def read_this(string, srate):
-    signal, samplerate = librosa.load(string, sr = srate, mono = True)
-    return(signal, samplerate)
+    SIGNAL, SAMPLERATE = librosa.load(string, sr = srate, mono = True)
+    return(SIGNAL, SAMPLERATE)
 
-def spectrogram(sample, samplerate, divs, title, bartitle):
+def spectrogram(sample, SAMPLERATE, divs, title, bartitle):
     
     
-    _, _, matrix, _, _ = fourier(sample, samplerate, divisor = divs)
+    _, _, matrix, _, _ = fourier(sample, SAMPLERATE, divisor = divs)
 
     
-    T = 1 / samplerate
-    time = np.arange(0, len(sample) / (samplerate), T) 
+    T = 1 / SAMPLERATE
+    time = np.arange(0, len(sample) / (SAMPLERATE), T) 
     
-    freq = np.linspace(0, samplerate / 2, int(samplerate / 2))
+    freq = np.linspace(0, SAMPLERATE / 2, int(SAMPLERATE / 2))
     
     colormap = plt.cm.magma
     fig, ax = plt.subplots()
@@ -41,16 +42,16 @@ def spectrogram(sample, samplerate, divs, title, bartitle):
     ax.grid(0)
 
 # función que me regresa la transformada de Fourier iterada
-def fourier(signal, samplerate, divisor):
+def fourier(SIGNAL, SAMPLERATE, divisor):
 
-    interval = int(samplerate / divisor)                      
+    interval = int(SAMPLERATE / divisor)                      
     
     magnitude = np.zeros((0,interval//2))                     
     position = 0                                              
-    size = int(len(signal) / interval)                        
+    size = int(len(SIGNAL) / interval)                        
     
     for ii in range(size):                                    
-        mini_sig = signal[position:position + interval] 
+        mini_sig = SIGNAL[position:position + interval] 
         N = len(mini_sig)
         yf = abs(fft(mini_sig))[:interval//2]                 
         yf = yf.reshape(1, interval//2)                       
@@ -101,11 +102,11 @@ def findmatch(goal, srate):
     divs = np.load('./music_data/database_peaks/div.npy')
     mag = np.load('./music_data/database_peaks/mag.npy', allow_pickle=True)
     pairs = np.load('./music_data/database_peaks/pairs.npy')
-    samplerate = np.load('./music_data/database_peaks/samplerate.npy')
+    SAMPLERATE = np.load('./music_data/database_peaks/SAMPLERATE.npy')
     
     songid = pairs[:,0]          
-    sample, _ = read_this('./music_data/recordings_audio/' + goal, srate)
-    _, _, samplemag, _, _ = fourier(sample, samplerate, divisor = divs)
+    sample, _ = read_this('./' + goal, srate)
+    _, _, samplemag, _, _ = fourier(sample, SAMPLERATE, divisor = divs)
     
     size = len(mag)
 
@@ -150,4 +151,40 @@ def findmatch(goal, srate):
 
     return(winner, samplescores, songid)
 
+def myrecording():
+	CHUNK = 1024
+	FORMAT = pyaudio.paInt16
+	CHANNELS = 1
+	RATE = 44100
+	RECORD_SECONDS = 10
+	WAVE_OUTPUT_FILENAME = 'recording.wav'
+
+	p = pyaudio.PyAudio()
+
+	stream = p.open(format=FORMAT,
+		        channels=CHANNELS,
+		        rate=RATE,
+		        input=True,
+		        frames_per_buffer=CHUNK)
+
+	print('* recording')
+
+	frames = []
+
+	for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+	    data = stream.read(CHUNK)
+	    frames.append(data)
+
+	print('* done recording')
+
+	stream.stop_stream()
+	stream.close()
+	p.terminate()
+
+	wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+	wf.setnchannels(CHANNELS)
+	wf.setsampwidth(p.get_sample_size(FORMAT))
+	wf.setframerate(RATE)
+	wf.writeframes(b''.join(frames))
+	wf.close()
 

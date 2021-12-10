@@ -26,19 +26,26 @@ while True:
 |   \  .' (       F1009 SP        _.`   \   |
 |.--.\`   _)                    ;-;      \._|
 |    ` _\(_)/_                  \ `'-,_,-'\ |
-jgs____ /(O)\  _________________/____)_`-._\|
+|______ /(O)\  _________________/____)_`-._\|
 """
         )
 
-    print('\nEnter recording number:\n') 
-    recording = 'recording_' + input('In[]: ') + '.wav'
+    print('\nEnter "R" to record:\n') 
+    recording = input('Input: ')
+    if recording.lower() == 'q':
+    	break
+    elif recording.lower() == 'r':
+    	myrecording()
+    else:
+    	print('\nfine, have it your way... rebel\n')
+    	myrecording()
     
     print('==============================================')
     print('\nPlaying Recording (Press "q" to quit)\n')
     print('==============================================')
 
-    subprocess.run(["mpv", "./music_data/recordings_audio/" + recording])
-    win, myscores, myid = findmatch(recording, srate=sr) 
+    subprocess.run(['mpv', './recording.wav', '--volume=60'])
+    win, myscores, myid = findmatch('recording.wav', srate=sr) 
 
     if myid == False:
         print('\nReturning to main')
