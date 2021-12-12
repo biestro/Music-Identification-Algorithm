@@ -15,7 +15,8 @@ from numpy import load
 while True:
 
     div = load('./music_data/database_peaks/div.npy')
-    sr = load('./music_data/database_peaks/samplerate.npy')
+    sr = load('./music_data/database_peaks/SAMPLERATE.npy')
+    dbase = load('./music_data/database_peaks/pairs.npy')
     
     print(
 """
@@ -31,33 +32,39 @@ while True:
         )
 
     print('\nEnter "R" to record:\n') 
+    print('\nEnter "Q" to quit:\n') 
+    print('\nEnter "L" to list available songs:\n') 
     recording = input('Input: ')
     if recording.lower() == 'q':
     	break
     elif recording.lower() == 'r':
     	myrecording()
+    elif recording.lower() == 'l':
+        print(dbase)
+        time.sleep(5)
     else:
     	print('\nfine, have it your way... rebel\n')
     	myrecording()
     
+    '''
     print('==============================================')
     print('\nPlaying Recording (Press "q" to quit)\n')
     print('==============================================')
 
     subprocess.run(['mpv', './recording.wav', '--volume=60'])
+    '''
     win, myscores, myid = findmatch('recording.wav', srate=sr) 
-
-    if myid == False:
+    if myid[0] == False: 
         print('\nReturning to main')
         time.sleep(2)
         os.system('cls||clear')
     else:
 
         print('==============================================')
-        print('\nPlaying Matched Song (Press "q" to quit)\n')
+        print(f'\nPlaying Matched Song: \n\t{win}\n (Press "q" to quit)\n')
         print('==============================================')
 
-        subprocess.run(["mpv", "./music_data/database_audio/" + win, '--start=30%'])
+        subprocess.run(["mpv", "./music_data/database_audio/" + win, '--start=60%', '--geometry=20%'])
         time.sleep(1)
         os.system('cls||clear')
 

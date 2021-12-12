@@ -35,4 +35,6 @@ for ii in range(len(songid)):
 np.save('./music_data/database_peaks/mag.npy', mag)
 np.save('./music_data/database_peaks/pairs.npy', pairs)
 np.save('./music_data/database_peaks/div.npy', div)
-np.save('./music_data/database_peaks/samplerate.npy', samplerate)
+np.save('./music_data/database_peaks/SAMPLERATE.npy', samplerate)
+
+print('\nDone!\n')
