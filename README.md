@@ -20,3 +20,5 @@ Testing was performed in Fedora 34 and openSUSE Leap 15.3 with pipewire and puls
 <p align="center">
   <img src="fig1.png" alt="Figure_1">
 </p>
+
+> Example of a correctly identified recording and its respective song ID (corresponding to the highest score) inside the database.
