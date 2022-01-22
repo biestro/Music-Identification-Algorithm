@@ -6,7 +6,7 @@ Keep in mind that, given the nature of the programming language used, the time t
 
 Testing was performed in Fedora 34 and openSUSE Leap 15.3 with pipewire and pulseaudio. Current version requires folders `music_data/database_peaks/` and `music_data/database_audio` to exist inside the main project. Music files (preferably `.wav` format) should be placed inside the latter location.
 
-## Dependencies (Python 3)
+# Dependencies (Python 3)
 
 * `librosa`
 * `matplotlib`
@@ -15,7 +15,7 @@ Testing was performed in Fedora 34 and openSUSE Leap 15.3 with pipewire and puls
   * requires `python3-devel` or similar, `portaudio-devel`, `alsa-lib-devel`, and probably `portaudio` (unfortunately)
 * `scipy`
 
-## Screenshot of an actual test
+# Screenshot of an actual test
 
 <p align="center">
   <img src="fig1.png" alt="Figure_1">
