@@ -37,11 +37,11 @@ def read_this(string, srate):
 
 def spectrogram(sample, SAMPLERATE, divs, title, bartitle):
     """
-	This function is solely for the research paper. It ouputs a spectrogram
-	of the selected song. It has little to none use in the identification
-	of samples and recordings.
+    This function is solely for the research paper. It ouputs a spectrogram
+    of the selected song. It has little to none use in the identification
+    of samples and recordings.
 
-	"""
+    """
     
     _, _, matrix, _, _ = fourier(sample, SAMPLERATE, divisor = divs)
 
@@ -75,17 +75,17 @@ def spectrogram(sample, SAMPLERATE, divs, title, bartitle):
 
 
 def fourier(SIGNAL, SAMPLERATE, divisor):
-	"""
-	The signal is first cut to be properly divisible by the 'divisior' factor. 
-	It then performs the fast FFT from scipy.fft on each interval or block,
-	whose length is specified by the 'divisor'. What follows is derived from
-	simple array operations dealing with the lengths, ranges, and the 'universal' 
-	44.1kHz constant.
+    """
+    The signal is first cut to be properly divisible by the 'divisior' factor. 
+    It then performs the fast FFT from scipy.fft on each interval or block,
+    whose length is specified by the 'divisor'. What follows is derived from
+    simple array operations dealing with the lengths, ranges, and the 'universal' 
+    44.1kHz constant.
 
-	It returns the final magnitude in decibels, the final magnitude, and the interval
-	calculated with help of the divisor.
+    It returns the final magnitude in decibels, the final magnitude, and the interval
+    calculated with help of the divisor.
 
-	"""
+    """
 
     interval = int(SAMPLERATE / divisor)                      
     
@@ -108,13 +108,13 @@ def fourier(SIGNAL, SAMPLERATE, divisor):
 
 
 def mypeaks(matrix, division):
-	"""
-	Calculates the maximum in every division within the block passed (the 'matrix'
-	parameter). 
-	
-	The variable 'a_n' specifies the divisions or windows in which it will extract
-	the maximum's index position.
-	"""
+    """
+    Calculates the maximum in every division within the block passed (the 'matrix'
+    parameter). 
+    
+    The variable 'a_n' specifies the divisions or windows in which it will extract
+    the maximum's index position.
+    """
     
     div = division
     m = matrix# np.array([mag_MAIN[90], mag_MAIN[91], mag_MAIN[92], mag_MAIN[93]])
@@ -140,27 +140,27 @@ def mypeaks(matrix, division):
 
 
 def getscore(song_magnitude, sample_magnitude, division):
-	"""
-	This function calculates the final score of the similarty between
-	the recording and the specified database or pool song. A higher score corresponds 
-	to a higher likelihood that the peaks from the recording match the peaks 
-	from said database song.
+    """
+    This function calculates the final score of the similarty between
+    the recording and the specified database or pool song. A higher score corresponds 
+    to a higher likelihood that the peaks from the recording match the peaks 
+    from said database song.
 
-	It does this through comparing the array peaks from the recording
-	to those from the specified database song in each interval, and then 
-	advancing unit step through the peak array (from the database song) and 
-	comparing again. During the comparison of each block, there is a binary
-	matrix with a '1' corresponding to a peak-match and a '0' corresponding 
-	to position without a match. It performs a (double) sum of the 1's and 
-	then saves this score in the score variable. This process is repeated 
-	through the next block.
+    It does this through comparing the array peaks from the recording
+    to those from the specified database song in each interval, and then 
+    advancing unit step through the peak array (from the database song) and 
+    comparing again. During the comparison of each block, there is a binary
+    matrix with a '1' corresponding to a peak-match and a '0' corresponding 
+    to position without a match. It performs a (double) sum of the 1's and 
+    then saves this score in the score variable. This process is repeated 
+    through the next block.
 
-	It then gets the maximum score from the array of scores. It does this to 
-	prevent an incredibly large song to match a few peaks, but due to its length, 
-	getting a higher score than the more appropiate match.
+    It then gets the maximum score from the array of scores. It does this to 
+    prevent an incredibly large song to match a few peaks, but due to its length, 
+    getting a higher score than the more appropiate match.
 
-	This guarantees a sensible score for comparison between a song pool.
-	"""
+    This guarantees a sensible score for comparison between a song pool.
+    """
     
     assert len(sample_magnitude)<len(song_magnitude), 'Array too big!' 
     score = []
@@ -173,17 +173,17 @@ def getscore(song_magnitude, sample_magnitude, division):
 
 
 def findmatch(goal, srate):
-	"""
-	This function attempts to find a match between the 'goal' and the whole
-	song pool. 
+    """
+    This function attempts to find a match between the 'goal' and the whole
+    song pool. 
 
-	It compares the score differences between all the songs in the database.
+    It compares the score differences between all the songs in the database.
 
-	Should the score be too low, it returns a message specifying the situation.
-	Otherwise, it returns the allegedly matched song in the database and the 
-	process is deemed complete.
+    Should the score be too low, it returns a message specifying the situation.
+    Otherwise, it returns the allegedly matched song in the database and the 
+    process is deemed complete.
 
-	"""
+    """
     divs = np.load('./music_data/database_peaks/div.npy')
     mag = np.load('./music_data/database_peaks/mag.npy', allow_pickle=True)
     pairs = np.load('./music_data/database_peaks/pairs.npy')
@@ -237,43 +237,43 @@ def findmatch(goal, srate):
     return(winner, samplescores, songid)
 
 def myrecording():
-	"""
-	With the aid of 'Cryo' on StackOverflow, this records the sound later used
-	for the identification.
-	"""
-	CHUNK = 1024
-	FORMAT = pyaudio.paInt16
-	CHANNELS = 1
-	RATE = 44100
-	RECORD_SECONDS = 10
-	WAVE_OUTPUT_FILENAME = 'recording.wav'
+    """
+    With the aid of 'Cryo' on StackOverflow, this records the sound later used
+    for the identification.
+    """
+    CHUNK = 1024
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 44100
+    RECORD_SECONDS = 10
+    WAVE_OUTPUT_FILENAME = 'recording.wav'
 
-	p = pyaudio.PyAudio()
+    p = pyaudio.PyAudio()
 
-	stream = p.open(format=FORMAT,
-		        channels=CHANNELS,
-		        rate=RATE,
-		        input=True,
-		        frames_per_buffer=CHUNK)
+    stream = p.open(format=FORMAT,
+                channels=CHANNELS,
+                rate=RATE,
+                input=True,
+                frames_per_buffer=CHUNK)
 
-	print('* recording')
+    print('* recording')
 
-	frames = []
+    frames = []
 
-	for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-	    data = stream.read(CHUNK)
-	    frames.append(data)
+    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+        data = stream.read(CHUNK)
+        frames.append(data)
 
-	print('* done recording')
+    print('* done recording')
 
-	stream.stop_stream()
-	stream.close()
-	p.terminate()
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
 
-	wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-	wf.setnchannels(CHANNELS)
-	wf.setsampwidth(p.get_sample_size(FORMAT))
-	wf.setframerate(RATE)
-	wf.writeframes(b''.join(frames))
-	wf.close()
+    wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+    wf.setnchannels(CHANNELS)
+    wf.setsampwidth(p.get_sample_size(FORMAT))
+    wf.setframerate(RATE)
+    wf.writeframes(b''.join(frames))
+    wf.close()
 

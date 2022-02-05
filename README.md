@@ -13,7 +13,9 @@ Testing was performed in Fedora 34 and openSUSE Leap 15.3 with pipewire and puls
 * `matplotlib`
 * `numpy`
 * `pyaudio`
-  * requires `python3-devel` or similar, `portaudio-devel`, `alsa-lib-devel`, and probably `portaudio` (unfortunately)
+  * requires `python3-devel` or equivalent, `portaudio-devel`, `alsa-lib-devel`, and probably `portaudio` (unfortunately)
+* `pytest-shutil`
+* `python3-tkinter` or equivalent
 * `scipy`
 
 ## Steps
